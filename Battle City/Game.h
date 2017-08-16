@@ -14,7 +14,7 @@ private:
 	Map map;
 	Armor* player;
 	Armor* secondPlayer;
-	vector <Armor*> AI;
+	vector <Armor*> AIArmors;
 	bool isWon;
 	gameType type;
 	int AINumber;

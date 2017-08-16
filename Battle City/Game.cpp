@@ -44,11 +44,11 @@ void Game::createAI()
 			break;
 	}
 	unique_lock<mutex> lc{ m };
-	AI.push_back(new Armor{ x + 1,y + 1,DOWN });
-	AI.back()->print();
+	AIArmors.push_back(new Armor{ x + 1,y + 1,DOWN });
+	AIArmors.back()->print();
 	map.addArmor(x, y);
 	lc.unlock();
-	thread(AIHandling, AI.back(), this).detach();
+	thread(AIHandling, AIArmors.back(), this).detach();
 }
 
 Armor * Game::createPlayer(Direction dir)
@@ -288,18 +288,16 @@ void missileHandling(Missile missile, Game* game)
 				game->isWon = true;
 				return;
 			}
-			for (int i = 0;i < game->AI.size();i++)
+			for (int i = 0;i < game->AIArmors.size();i++)
 			{
-				if (game->AI[i]->checkHit(x, y))
+				if (game->AIArmors[i]->checkHit(x, y))
 				{
-					game->AI[i]->erase();
-					game->map.cleanSpace(game->AI[i]->getX() - 1, game->AI[i]->getY() - 1, 3);
-					//this_thread::sleep_for(0.4s);
-					//delete *(game->AI.begin() + i);
-					game->AI.erase(game->AI.begin() + i);
+					game->AIArmors[i]->erase();
+					game->map.cleanSpace(game->AIArmors[i]->getX() - 1, game->AIArmors[i]->getY() - 1, 3);
+					game->AINumber--;
 				}
 			}
-			if (game->AI.size() == 0)
+			if (game->AINumber == 0)
 			{
 				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,(short int)(game->map.getSizeY() + 2) });
 				cout << "Вы победили";
@@ -325,8 +323,8 @@ void missileHandling(Missile missile, Game* game)
 Game::~Game()
 {
 	delete player;
-	for (int i = 0;i < AI.size();i++)
-		delete AI[i];
+	for (auto armor : AIArmors)
+		delete armor;
 	if (secondPlayer != nullptr)
 		delete secondPlayer;
 }

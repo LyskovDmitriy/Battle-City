@@ -1,0 +1,27 @@
+                                                  |1
+                                                  |2
+                                                  |3
+cccccc     ccccccccccccccccccccccccccc     ccccccc|4
+cccccc     ccccccccccccccccccccccccccc     ccccccc|5
+cccccc     ccccccccccccccccccccccccccc     ccccccc|6
+           ccccccccccccccccccccccccccc            |7
+           ccccccccccccccccccccccccccc            |8
+           ccccccccccccccccccccccccccc            |9
+           ccccccccccccccccccccccccccc            |10
+                                                  |11
+                                                  |12
+                                                  |13
+                                                  |14
+                                                  |15
+           ccccccccccccccccccccccccccc            |16
+           ccccccccccccccccccccccccccc            |17
+           ccccccccccccccccccccccccccc            |18
+           ccccccccccccccccccccccccccc            |19
+cccccc     ccccccccccccccccccccccccccc     ccccccc|20
+cccccc     ccccccccccccccccccccccccccc     ccccccc|21
+cccccc     ccccccccccccccccccccccccccc     ccccccc|22
+                                                  |23
+                                                  |24
+                                                  |25
+__________________________________________________
+50õ25

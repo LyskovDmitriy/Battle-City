@@ -5,6 +5,7 @@ Map::Map(int x, int y) : sizeX(x), sizeY(y)
 	MAPS.insert(make_pair("Карта 1", "Maps/map1.txt" ));
 	MAPS.insert(make_pair("Карта 2", "Maps/map2.txt"));
 	MAPS.insert(make_pair("Карта 3", "Maps/map3.txt"));
+	MAPS.insert(make_pair("Карта 4", "Maps/map4.txt"));
 	
 	map = new char*[sizeY];
 	for (int i = 0;i < sizeY;i++)

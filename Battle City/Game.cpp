@@ -59,7 +59,7 @@ Armor * Game::createPlayer(Direction dir)
 	{
 		X = rand() % (map.getSizeX() - 2);
 		if (dir == DOWN)
-			Y = map.getSizeY() - 2 - rand() % 4;
+			Y = map.getSizeY() - 2 - rand() % 5;
 		else
 			Y = 0 + rand() % 4;
 		if (map.spaceIsEmpty(X, Y, 3))

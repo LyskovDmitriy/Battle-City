@@ -16,13 +16,24 @@ int main()
 	srand(time(NULL));
 	while (true)
 	{
-		short int sizeX = 25 + rand() % 76; // [25,100]
+		short int sizeX = 30 + rand() % 71; // [30,100]
 		short int sizeY = 25 + rand() % 6; // [25,30]
 		cout << "Выберите режим (1 - одиночная игра, 2 - многопользовательская): ";
 		char answer = '1';
 		cin >> answer;
 		cin.ignore(10, '\n');
-		Game game(sizeX, sizeY, 4);
+		char AIs = '1';
+		while (true)
+		{
+			cout << "Введите количество вражеских танков (1-6): ";
+			cin >> AIs;
+			cin.ignore(10, '\n');
+			if (AIs<'1' || AIs>'6')
+				cout << "Ошибка ввода" << endl << endl;
+			else
+				break;
+		}
+		Game game(sizeX, sizeY, AIs - '0');
 		if (answer == '2')
 			game.playMultiPlayerGame();
 		else

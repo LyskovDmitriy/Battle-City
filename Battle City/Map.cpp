@@ -42,7 +42,6 @@ void Map::fillFromFile()
 		}
 	}
 	cin.ignore(10, '\n');
-	system("cls");
 	if (!file)
 		exit(0);
 	//check map's Y size
@@ -98,6 +97,7 @@ void Map::fillFromFile()
 
 void Map::print() const
 {
+	system("cls");
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
 	for (int i = 0;i < sizeY + 2;i++)
 	{

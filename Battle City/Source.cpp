@@ -22,24 +22,26 @@ int main()
 		char answer = '1';
 		cin >> answer;
 		cin.ignore(10, '\n');
-		char AIs = '1';
-		while (true)
-		{
-			cout << "¬ведите количество вражеских танков (1-6): ";
-			cin >> AIs;
-			cin.ignore(10, '\n');
-			if (AIs<'1' || AIs>'6')
-				cout << "ќшибка ввода" << endl << endl;
-			else
-				break;
-		}
-		Game game(sizeX, sizeY, AIs - '0');
+		Game game(sizeX, sizeY);
 		if (answer == '2')
 			game.playMultiPlayerGame();
 		else
-			game.playSinglePlayerGame();
-		this_thread::sleep_for(1s);
-		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,(short)(sizeY + 2) });
+		{
+			char AIs = '1';
+			while (true)
+			{
+				cout << "¬ведите количество вражеских танков (1-6): ";
+				cin >> AIs;
+				cin.ignore(10, '\n');
+				if (AIs<'1' || AIs>'6')
+					cout << "ќшибка ввода" << endl << endl;
+				else
+					break;
+			}
+			game.playSinglePlayerGame(AIs - '0');
+		}
+		this_thread::sleep_for(0.5s);
+		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,(short)(sizeY + 3) });
 		answer = 'n';
 		cout << "—ыграть еще раз (y/n)? ";
 		cin >> answer;

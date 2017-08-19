@@ -1,15 +1,16 @@
 #include "Game.h"
 
-Game::Game(int x, int y, int AInumber) : map(x, y), isWon(false), type(gameType::SINGLEPLAYER), AINumber(AInumber)
+Game::Game(int x, int y) : map(x, y), isWon(false), type(gameType::SINGLEPLAYER), AINumber(0)
 {
 	map.fillFromFile();
 }
 
-void Game::playSinglePlayerGame()
+void Game::playSinglePlayerGame(int AInumber)
 {
 	type = gameType::SINGLEPLAYER;
+	AINumber = AInumber;
+	map.print();	
 	printRules();
-	map.print();
 	player = createPlayer(DOWN);
 	secondPlayer = nullptr;
 	for (int i = 0;i < AINumber;i++)
@@ -24,8 +25,8 @@ void Game::playSinglePlayerGame()
 void Game::playMultiPlayerGame()
 {
 	type = gameType::MULTIPLAYER;
-	printRules();
 	map.print();
+	printRules();
 	player = createPlayer(DOWN);
 	secondPlayer = createPlayer(UP);
 	thread{ startPlayerAction, this }.join();
@@ -78,10 +79,10 @@ void Game::printRules() const
 	cout << "Управление: ";
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ (short)(x + 3),1 });
 	if (type == gameType::SINGLEPLAYER)
-		cout << "Перемещение на WASD и стрелки. Стрельба на Q";
+		cout << "Перемещение на WASD и стрелки. Стрельба на Q или пробел";
 	else
 	{
-		cout << "Первый игрок     Перемещение на WASD. Стрельба на Q";
+		cout << "Первый игрок     Перемещение на WASD. Стрельба на Q или пробел";
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ (short)(x + 3),2 });
 		cout << "Второй игрок     Перемещение на стрелки. Стрельба на 0";
 	}
@@ -104,11 +105,18 @@ Missile playerInteraction(Game* game)
 	char ch = 'a';
 	Direction dir = UP;
 	Armor* activePlayer = nullptr;
-	while (ch = _getch())
+	while (true)
 	{
-		if (!game->player->checkAlive())
+		if (!game->player->checkAlive()||game->isWon)
 			return Missile();
-		if (ch == 'q')
+		if (_kbhit())
+			ch = _getch();
+		else
+		{
+			ch = 'g';
+			this_thread::sleep_for(0.02s);
+		}
+		if (ch == 'q' || ch == ' ')
 		{
 			this_thread::sleep_for(0.2s);
 			return game->player->getMissile();
@@ -265,7 +273,7 @@ void missileHandling(Missile missile, Game* game)
 		int x = missile.getX();
 		int y = missile.getY();
 		unique_lock<mutex> lc{ m };
-		if (x == 0 || x >= game->map.getSizeX() || y == 0 || y >= game->map.getSizeY())
+		if (x == 0 || x >= game->map.getSizeX() + 1 || y == 0 || y >= game->map.getSizeY() + 1)
 			return;
 		auto hitObject = game->map.missileInteraction(x - 1, y - 1);
 

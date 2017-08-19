@@ -19,9 +19,9 @@ private:
 	gameType type;
 	int AINumber;
 public:
-	Game(int x, int y, int AInumber = 3);
+	Game(int x, int y);
 
-	void playSinglePlayerGame();
+	void playSinglePlayerGame(int AInumber);
 	void playMultiPlayerGame();
 
 	void createAI();
